@@ -4,9 +4,8 @@ import time
 
 # === CONFIGURATION ===
 source_folder = r"C:\Users\morri\OneDrive\Desktop"
-
 icloud_folder = r"C:\Users\morri\iCloudDrive"  # Make sure this is the correct path
-sync_interval = 10  # Check every 10 seconds
+sync_interval = 5  # Check every 5 seconds
 
 # === SYNC FUNCTION ===
 def sync_to_icloud():
@@ -17,9 +16,16 @@ def sync_to_icloud():
         if os.path.isfile(src_path):
             if not os.path.exists(dst_path):
                 shutil.copy2(src_path, dst_path)
-                print(f"Synced: {filename}")
+                print(f"Synced file: {filename}")
             else:
-                print(f"Already exists in iCloud: {filename}")
+                print(f"File already exists in iCloud: {filename}")
+                
+        elif os.path.isdir(src_path):
+            if not os.path.exists(dst_path):
+                shutil.copytree(src_path, dst_path)
+                print(f"Synced folder: {filename}")
+            else:
+                print(f"Folder already exists in iCloud: {filename}")
 
 # === MAIN LOOP ===
 def main():
